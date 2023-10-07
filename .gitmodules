@@ -1,0 +1,15 @@
+[submodule "third_party/tflite-micro-esp-examples"]
+	path = third_party/tflite-micro-esp-examples
+	url = https://github.com/espressif/tflite-micro-esp-examples.git
+[submodule "third_party/esp-nn"]
+	path = third_party/esp-nn
+	url = https://github.com/espressif/esp-nn.git
+[submodule "third_party/micropython"]
+	path = third_party/micropython
+	url = https://github.com/micropython/micropython.git
+[submodule "third_party/micropython-ulab"]
+	path = third_party/micropython-ulab
+	url = https://github.com/v923z/micropython-ulab
+[submodule "third_party/esp32-camera"]
+	path = third_party/esp32-camera
+	url = https://github.com/espressif/esp32-camera
