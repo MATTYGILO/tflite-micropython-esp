@@ -31,6 +31,8 @@ jobs:
 
           cd third_party/micropython
           
+          pwd
+          
           git submodule update --init lib/axtls
           git submodule update --init lib/berkeley-db-1.xx
           
