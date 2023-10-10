@@ -6,4 +6,4 @@ CONFIG_USB_AND_UART=y
 # end of LWIP
 CONFIG_PARTITION_TABLE_CUSTOM=y
 # cwd is boards/esp32/MICROLITE_S2_SPIRAM
-CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../../micropython/ports/esp32/partitions.csv"
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="../../third_party/micropython/ports/esp32/partitions.csv"
