@@ -24,6 +24,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      # Cache dependencies (you can customize the cache key)
+      - name: Cache build files
+        id: cache-build-files
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./esp-idf/
+            ./third_party/micropython/
+          key: ${{ runner.os }}-build-${{ hashFiles('**/lockfiles') }}
+
       - name: Prepare to Build Tensorflow Micropython Firmware for ESP32
         run: |
           git submodule init
@@ -76,6 +86,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      # Restore cached dependencies
+      - name: Restore cached build files
+        uses: actions/cache@v2
+        with:
+          path: |
+            ./esp-idf/
+            ./third_party/micropython/
+          key: ${{ runner.os }}-build-${{ hashFiles('**/lockfiles') }}
 
       - name: Build Firmware
         run: |
