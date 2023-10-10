@@ -16,58 +16,7 @@ on:
       - 'manage/**'
 
 jobs:
-  prepare:
-    runs-on: ubuntu-latest
-    outputs:
-      esp-idf-commit: ${{ steps.cache-keys.outputs.idf-commit }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      # Cache dependencies (you can customize the cache key)
-      - name: Cache build files
-        id: cache-build-files
-        uses: actions/cache@v2
-        with:
-          path: |
-            ./esp-idf/
-            ./third_party/micropython/
-          key: ${{ runner.os }}-build-${{ hashFiles('**/lockfiles') }}
-
-      - name: Prepare to Build Tensorflow Micropython Firmware for ESP32
-        run: |
-          git submodule init
-          git submodule update --recursive
-          cd third_party/micropython
-          git submodule update --init lib/axtls
-          git submodule update --init lib/berkeley-db-1.xx
-          cd ports/esp32
-          make BOARD= submodules
-          cd ../../../
-
-      - name: Get Cache Keys
-        id: cache-keys
-        run: |
-          IDF_COMMIT=8b94183c9cb47ede8f02df5598d8b9d68c754860
-          echo "::set-output name=idf-commit::$IDF_COMMIT"
-
-      - name: Setup IDF
-        run: |
-          source ./third_party/micropython/tools/ci.sh && ci_esp32_idf44_setup
-
-      - name: Setup Build for Tensorflow
-        run: |
-          source ./esp-idf/export.sh
-          pip3 install Pillow numpy Wave
-
-      - name: Build micropython cross compiler
-        run: |
-          source ./esp-idf/export.sh
-          cd ./third_party/micropython
-          make -C mpy-cross V=1 clean all
-
   build:
-    needs: prepare
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -83,18 +32,41 @@ jobs:
           'MICROLITE_SPIRAM_16M',
           'MICROLITE_SPIRAM_CAM'
         ]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Restore cached dependencies
-      - name: Restore cached build files
-        uses: actions/cache@v2
-        with:
-          path: |
-            ./esp-idf/
-            ./third_party/micropython/
-          key: ${{ runner.os }}-build-${{ hashFiles('**/lockfiles') }}
+      - name: Prepare to Build Tensorflow Micropython Firmware for ESP32
+        run: |
+          git submodule init
+          git submodule update --recursive
+          cd third_party/micropython
+          git submodule update --init lib/axtls
+          git submodule update --init lib/berkeley-db-1.xx
+          cd ports/esp32
+          make BOARD= submodules
+          cd ../../../
+
+      - name: Get Cache Keys
+        run: |
+          IDF_COMMIT=8b94183c9cb47ede8f02df5598d8b9d68c754860
+          echo "esp-idf-commit=$IDF_COMMIT" >> $GITHUB_ENV
+
+      - name: Setup IDF
+        run: |
+          source ./third_party/micropython/tools/ci.sh && ci_esp32_idf44_setup
+
+      - name: Setup Build for Tensorflow
+        run: |
+          source ./esp-idf/export.sh
+          pip3 install Pillow numpy Wave
+
+      - name: Build micropython cross compiler
+        run: |
+          source ./esp-idf/export.sh
+          cd ./third_party/micropython
+          make -C mpy-cross V=1 clean all
 
       - name: Build Firmware
         run: |
