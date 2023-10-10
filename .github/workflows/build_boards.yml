@@ -5,10 +5,12 @@ on:
     paths-ignore:
       - 'docs/**'
       - 'manage/**'
+      - 'assets/**'
       - 'README.md'
   pull_request:
     paths-ignore:
       - 'examples/**'
+      - 'assets/**'
       - 'README.md'
       - 'ci/*unix*.sh'
       - '.github/workflows/build_unix.yml'

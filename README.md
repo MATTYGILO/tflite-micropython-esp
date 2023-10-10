@@ -1,7 +1,6 @@
 # tflite-micropython-esp
-
 Based on [tensorflow-micropython-examples](https://github.com/mocleiri/tensorflow-micropython-examples)
-
+[![logo](assets/logo.png)]()
 
 ## Implementing:
 The repo's structure is designed to be easily implemented.
