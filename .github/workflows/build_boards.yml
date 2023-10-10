@@ -16,23 +16,10 @@ on:
       - 'manage/**'
 
 jobs:
-  build:
+  prepare:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        board_type: [
-          'MICROLITE',
-          'MICROLITE_C3',
-          'MICROLITE_C3_USB',
-          'MICROLITE_S2_SPIRAM',
-          'MICROLITE_S3',
-          'MICROLITE_S3_SPIRAM',
-          'MICROLITE_S3_SPIRAM_OCTAL',
-          'MICROLITE_SPIRAM',
-          'MICROLITE_SPIRAM_16M',
-          'MICROLITE_SPIRAM_CAM'
-        ]
-
+    outputs:
+      esp-idf-commit: ${{ steps.cache-keys.outputs.idf-commit }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -49,9 +36,10 @@ jobs:
           cd ../../../
 
       - name: Get Cache Keys
+        id: cache-keys
         run: |
           IDF_COMMIT=8b94183c9cb47ede8f02df5598d8b9d68c754860
-          echo "esp-idf-commit=$IDF_COMMIT" >> $GITHUB_ENV
+          echo "::set-output name=idf-commit::$IDF_COMMIT"
 
       - name: Setup IDF
         run: |
@@ -67,6 +55,27 @@ jobs:
           source ./esp-idf/export.sh
           cd ./third_party/micropython
           make -C mpy-cross V=1 clean all
+
+  build:
+    needs: prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        board_type: [
+          'MICROLITE',
+          'MICROLITE_C3',
+          'MICROLITE_C3_USB',
+          'MICROLITE_S2_SPIRAM',
+          'MICROLITE_S3',
+          'MICROLITE_S3_SPIRAM',
+          'MICROLITE_S3_SPIRAM_OCTAL',
+          'MICROLITE_SPIRAM',
+          'MICROLITE_SPIRAM_16M',
+          'MICROLITE_SPIRAM_CAM'
+        ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Build Firmware
         run: |
