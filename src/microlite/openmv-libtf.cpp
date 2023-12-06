@@ -59,58 +59,85 @@ extern "C" {
 
     int libtf_interpreter_init(microlite_interpreter_obj_t *microlite_interpreter) {
 
-        tflite::ErrorReporter *error_reporter = &micro_error_reporter;
+        try {
 
-        const tflite::Model *model = tflite::GetModel(microlite_interpreter->model_data->items);
+            // The error reporter
+            tflite::ErrorReporter *error_reporter = &micro_error_reporter;
 
-//        if (model->version() != TFLITE_SCHEMA_VERSION) {
-//            error_reporter->Report("Model provided is schema version is not equal to supported version!");
-//            return 1;
-//        }
+            // Get the tflite model from the model data
+            const tflite::Model *model = tflite::GetModel(microlite_interpreter->model_data->items);
 
-        // if (libtf_align_tensor_arena((uint8_t **)microlite_interpreter->tensor_arena->items, &microlite_interpreter->tensor_arena->len)) {
-        //      error_reporter->Report("Align failed!");
-        //      return 1;
-        //  }
+            // if (model->version() != TFLITE_SCHEMA_VERSION) {
+            //     error_reporter->Report("Model provided is schema version is not equal to supported version!");
+            //     return 1;
+            // }
+
+            // if (libtf_align_tensor_arena((uint8_t **)microlite_interpreter->tensor_arena->items, &microlite_interpreter->tensor_arena->len)) {
+            //      error_reporter->Report("Align failed!");
+            //      return 1;
+            //  }
+
+            // Set the tensorflow error reporter
+            microlite_interpreter->tf_error_reporter = (mp_obj_t)error_reporter;
+
+            // Set the tensorflow model
+            microlite_interpreter->tf_model = (mp_obj_t)model;
 
 
-        microlite_interpreter->tf_error_reporter = (mp_obj_t)error_reporter;
-        microlite_interpreter->tf_model = (mp_obj_t)model;
+            // tflite::MicroAllocator *allocator = tflite::MicroAllocator::Create(
+            //     (uint8_t*)microlite_interpreter->tensor_arena->items,
+            //     microlite_interpreter->tensor_arena->len, error_reporter);
 
+            // The operation resolver
+            tflite::PythonOpsResolver op_resolver;
 
-        // tflite::MicroAllocator *allocator = tflite::MicroAllocator::Create(
-        //     (uint8_t*)microlite_interpreter->tensor_arena->items,
-        //     microlite_interpreter->tensor_arena->len, error_reporter);
+            // The interpreter
+            tflite::MicroInterpreter *interpreter = new tflite::MicroInterpreter(model,
+                                                                                 op_resolver,
+                                                                                 (uint8_t*)microlite_interpreter->tensor_arena->items,
+                                                                                 microlite_interpreter->tensor_arena->len);
 
+            // Whether the allocation of tensors was successful
+            if (interpreter->AllocateTensors() != kTfLiteOk) {
+                MicroPrintf("AllocateTensors() failed!");
+                return 1;
+            }
 
-        tflite::PythonOpsResolver op_resolver;
-        tflite::MicroInterpreter *interpreter = new tflite::MicroInterpreter(model,
-                                             op_resolver,
-                                             (uint8_t*)microlite_interpreter->tensor_arena->items,
-                                             microlite_interpreter->tensor_arena->len);
+            // Set the tensorflow interpreter
+            microlite_interpreter->tf_interpreter = (mp_obj_t)interpreter;
 
-        if (interpreter->AllocateTensors() != kTfLiteOk) {
-            MicroPrintf("AllocateTensors() failed!");
+            return 0;
+        }
+        catch (std::exception &e) {
+            MicroPrintf("Exception: %s", e.what());
             return 1;
         }
 
-        microlite_interpreter->tf_interpreter = (mp_obj_t)interpreter;
-
-        return 0;
     }
 
     int libtf_interpreter_invoke(microlite_interpreter_obj_t *microlite_interpreter)
     {
-        tflite::MicroInterpreter *interpreter = (tflite::MicroInterpreter *)microlite_interpreter->tf_interpreter;
+        try {
+            // The interpreter
+            tflite::MicroInterpreter *interpreter = (tflite::MicroInterpreter *)microlite_interpreter->tf_interpreter;
 
-        mp_call_function_1(microlite_interpreter->input_callback, microlite_interpreter);
+            // Run the input callback
+            mp_call_function_1(microlite_interpreter->input_callback, microlite_interpreter);
 
-        if (interpreter->Invoke() != kTfLiteOk) {
-            MicroPrintf("Invoke() failed!");
+            // Invoke the interpreter
+            if (interpreter->Invoke() != kTfLiteOk) {
+                MicroPrintf("Invoke() failed!");
+                return 1;
+            }
+
+            // Run the output callback
+            mp_call_function_1(microlite_interpreter->output_callback, microlite_interpreter);
+
+            return 0;
+        }
+        catch (std::exception &e) {
+            MicroPrintf("Exception: %s", e.what());
             return 1;
         }
-
-        mp_call_function_1(microlite_interpreter->output_callback, microlite_interpreter);
-        return 0;
     }
 }

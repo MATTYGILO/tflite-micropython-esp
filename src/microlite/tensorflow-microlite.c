@@ -237,21 +237,6 @@ STATIC mp_obj_t interpreter_make_new(const mp_obj_type_t *type, size_t n_args, s
     //  - output callback function
     mp_arg_check_num(n_args, n_kw, 4, 4, false);
 
-    // Output whether we are using tflite static, TF_LITE_STATIC_MEMORY
-    #ifdef TF_LITE_STATIC_MEMORY
-    mp_printf(MP_PYTHON_PRINTER, "Using TF_LITE_STATIC_MEMORY\n");
-    #endif
-
-    // Output whether we are using esp nn
-    #ifdef ESP_NN
-    mp_printf(MP_PYTHON_PRINTER, "Using ESP_NN\n");
-    #endif
-
-    // Output whether the neural network is optimised
-    #ifdef CONFIG_NN_OPTIMIZED
-    mp_printf(MP_PYTHON_PRINTER, "Using CONFIG_NN_OPTIMIZED\n");
-    #endif
-
     // Get the model bytes, this is a memoryview object
     mp_obj_array_t *model = MP_OBJ_TO_PTR (args[0]);
 
@@ -297,7 +282,12 @@ STATIC mp_obj_t interpreter_make_new(const mp_obj_type_t *type, size_t n_args, s
     mp_printf(MP_PYTHON_PRINTER, "interpreter_make_new: model size = %d, tensor arena = %d\n", self->model_data->len, self->tensor_arena->len);
 
     // Initialize the interpreter
-    libtf_interpreter_init(self);
+    int code = libtf_interpreter_init(self);
+
+    // If the interpreter failed to initialize, return None
+    if (code != 0) {
+        return mp_const_none;
+    }
 
     // Return the interpreter object
     return MP_OBJ_FROM_PTR(self);
