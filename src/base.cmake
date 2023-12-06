@@ -273,7 +273,7 @@ target_compile_options(microlite INTERFACE
     -Wno-error=unused-const-variable
     -Wno-error=sign-compare
     -fno-rtti
-    -fexceptions  # -fno-exceptions
+    -fno-exceptions
     -O3
     -Wno-error=maybe-uninitialized
 )
