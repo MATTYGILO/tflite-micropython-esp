@@ -50,6 +50,11 @@ jobs:
           make BOARD= submodules
           cd ../../../
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.10.16
+
       - name: Setup IDF
         run: |
           source ./third_party/micropython/tools/ci.sh && ci_esp32_idf_setup
