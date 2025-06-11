@@ -27,14 +27,9 @@ endforeach()
 configure_file(${CMAKE_BINARY_DIR}/sdkconfig.combined.in ${CMAKE_BINARY_DIR}/sdkconfig.combined COPYONLY)
 set(SDKCONFIG_DEFAULTS ${CMAKE_BINARY_DIR}/sdkconfig.combined)
 
-# === Pull in the esp_eth component from your ESP-IDF install ===
-# This makes CMake scan the ESP-IDF esp_eth/phy code (including
-# esp_eth_phy_lan867x.h) and register it automatically.
-set(EXTRA_COMPONENT_DIRS
-        "$ENV{IDF_PATH}/components/esp_eth"
-)
-# ===================================================================
+# ——————————————————————————————————————————————————————————————
+# Pull in the ethernet driver too
+list(APPEND IDF_COMPONENTS "esp_eth")
 
-# Include main IDF cmake file and define the project.
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(micropython)
