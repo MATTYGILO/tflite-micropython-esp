@@ -50,14 +50,9 @@ jobs:
           make BOARD= submodules
           cd ../../../
 
-      - name: Get Cache Keys
-        run: |
-          IDF_COMMIT=8b94183c9cb47ede8f02df5598d8b9d68c754860
-          echo "esp-idf-commit=$IDF_COMMIT" >> $GITHUB_ENV
-
       - name: Setup IDF
         run: |
-          source ./third_party/micropython/tools/ci.sh && ci_esp32_idf44_setup
+          source ./third_party/micropython/tools/ci.sh && ci_esp32_idf_setup
 
       - name: Setup Build for Tensorflow
         run: |
