@@ -44,10 +44,6 @@ jobs:
         with:
           python-version: 3.10.16
 
-      - name: Setup IDF
-        run: |
-          source ./third_party/micropython/tools/ci.sh && ci_esp32_idf_setup
-
       - name: Prepare to Build Tensorflow Micropython Firmware for ESP32
         run: |
           git submodule init
@@ -58,6 +54,10 @@ jobs:
           cd ports/esp32
           make BOARD= submodules
           cd ../../../
+
+      - name: Setup IDF
+        run: |
+          source ./third_party/micropython/tools/ci.sh && ci_esp32_idf_setup
 
       - name: Setup Build for Tensorflow
         run: |
@@ -84,6 +84,6 @@ jobs:
           name: microlite-esp32-${{ matrix.board_type }}-firmware
           path: |
             ./boards/${{ matrix.board_type }}/build/bootloader/bootloader.bin
-            ./boards/${{ matrix.board_type }}/build/partition_table/partition-table.bin
+            ./boards/${{ matrix.board_type }}/build/partition_table/partition-table.bin  # yamllint disable-line rule:line-length
             ./boards/${{ matrix.board_type }}/build/micropython.bin
             ./boards/${{ matrix.board_type }}/build/micropython.elf
