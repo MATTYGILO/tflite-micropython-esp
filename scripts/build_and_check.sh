@@ -29,6 +29,9 @@ fi
 # Source esp-idf environment
 source ./esp-idf/export.sh
 
+pip3 install pyelftools
+pip3 install ar
+
 # Build micropython cross compiler
 pushd third_party/micropython >/dev/null
 make -C mpy-cross V=1 clean all

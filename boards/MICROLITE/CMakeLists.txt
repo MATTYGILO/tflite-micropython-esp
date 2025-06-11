@@ -27,6 +27,13 @@ endforeach()
 configure_file(${CMAKE_BINARY_DIR}/sdkconfig.combined.in ${CMAKE_BINARY_DIR}/sdkconfig.combined COPYONLY)
 set(SDKCONFIG_DEFAULTS ${CMAKE_BINARY_DIR}/sdkconfig.combined)
 
+# === Add this block to pick up esp_eth/phy as an extra component ===
+# so the build system will scan it, register its include dirs, sources, etc.
+set(EXTRA_COMPONENT_DIRS
+        "${MICROPY_PORT_DIR}/components/esp_eth"    # pulls in the esp_eth component tree
+)
+# ===================================================================
+
 # Include main IDF cmake file and define the project.
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(micropython)
