@@ -44,39 +44,10 @@ jobs:
         with:
           python-version: 3.10.16
 
-      - name: Prepare to Build Tensorflow Micropython Firmware for ESP32
+      - name: Build and check firmware
         run: |
-          git submodule init
-          git submodule update --recursive
-          cd third_party/micropython
-          git submodule update --init lib/axtls
-          git submodule update --init lib/berkeley-db-1.xx
-          cd ports/esp32
-          make BOARD= submodules
-          cd ../../../
-
-      - name: Setup IDF
-        run: |
-          source ./third_party/micropython/tools/ci.sh && ci_esp32_idf_setup
-
-      - name: Setup Build for Tensorflow
-        run: |
-          source ./esp-idf/export.sh
-          pip3 install Pillow numpy Wave
-
-      - name: Build micropython cross compiler
-        run: |
-          source ./esp-idf/export.sh
-          cd ./third_party/micropython
-          make -C mpy-cross V=1 clean all
-
-      - name: Build Firmware
-        run: |
-          source ./esp-idf/export.sh
-          cd ./boards/${{ matrix.board_type }}
-          rm -rf build
-          idf.py clean build
-          chmod +x ../../scripts/assemble-unified-image-esp.sh
+          chmod +x ./scripts/build_and_check.sh
+          ./scripts/build_and_check.sh ${{ matrix.board_type }}
 
       - name: Archive Firmware
         uses: actions/upload-artifact@v4
