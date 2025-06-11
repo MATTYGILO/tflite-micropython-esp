@@ -10,6 +10,3 @@
 [submodule "third_party/micropython-ulab"]
 	path = third_party/micropython-ulab
 	url = https://github.com/v923z/micropython-ulab.git
-[submodule "third_party/esp32-camera"]
-	path = third_party/esp32-camera
-	url = https://github.com/espressif/esp32-camera.git
