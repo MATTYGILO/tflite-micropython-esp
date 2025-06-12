@@ -1,1 +1,11 @@
 /esp-idf/
+
+# Build directories under boards/**
+boards/**/build/
+
+# Managed components under boards/**
+boards/**/managed_components/
+
+# Lock files under boards/**
+boards/**/dependencies.lock
+boards/**/*.lock

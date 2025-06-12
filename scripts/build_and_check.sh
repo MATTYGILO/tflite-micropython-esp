@@ -40,7 +40,14 @@ popd >/dev/null
 # Build firmware for the selected board
 pushd boards/${BOARD} >/dev/null
 rm -rf build
-idf.py clean build
+
+# Inject flags so that:
+#  • C builds drop -Werror=stringop-overflow
+#  • C++ builds retain -fno-rtti
+idf.py fullclean \
+    -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
+    -DCMAKE_CXX_FLAGS="-fno-rtti" \
+    build
 chmod +x ../../scripts/assemble-unified-image-esp.sh
 ../../scripts/assemble-unified-image-esp.sh ../../third_party/micropython/ports/esp32
 popd >/dev/null
