@@ -16,7 +16,7 @@
 #include <stdio.h>
 
 extern "C" {
-    STATIC microlite::MicropythonErrorReporter micro_error_reporter;
+    static microlite::MicropythonErrorReporter micro_error_reporter;
 /*
  Return the index'th tensor
  */

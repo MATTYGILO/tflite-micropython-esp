@@ -21,10 +21,10 @@
 
 // The tensor object =================================================
 
-STATIC const mp_obj_type_t microlite_tensor_type;
+static const mp_obj_type_t microlite_tensor_type;
 
 
-STATIC mp_obj_t tensor_get_value(mp_obj_t self_in, mp_obj_t index_obj) {
+static mp_obj_t tensor_get_value(mp_obj_t self_in, mp_obj_t index_obj) {
 
     // Get our tensor object
     microlite_tensor_obj_t *self = MP_OBJ_TO_PTR(self_in);
@@ -64,7 +64,7 @@ STATIC mp_obj_t tensor_get_value(mp_obj_t self_in, mp_obj_t index_obj) {
 }
 
 
-STATIC mp_obj_t tensor_set_value (mp_obj_t self_in, mp_obj_t index_obj, mp_obj_t value) {
+static mp_obj_t tensor_set_value (mp_obj_t self_in, mp_obj_t index_obj, mp_obj_t value) {
 
     // Get the index from the index object
     mp_int_t index = mp_obj_int_get_checked(index_obj);
@@ -99,7 +99,7 @@ STATIC mp_obj_t tensor_set_value (mp_obj_t self_in, mp_obj_t index_obj, mp_obj_t
 }
 
 
-STATIC mp_obj_t tensor_get_tensor_type(mp_obj_t self_in, mp_obj_t index_obj) {
+static mp_obj_t tensor_get_tensor_type(mp_obj_t self_in, mp_obj_t index_obj) {
 
     // Get our tensor object
     microlite_tensor_obj_t *self = MP_OBJ_TO_PTR(self_in);
@@ -115,7 +115,7 @@ STATIC mp_obj_t tensor_get_tensor_type(mp_obj_t self_in, mp_obj_t index_obj) {
 }
 
 
-STATIC mp_obj_t tensor_quantize_float_to_int8(mp_obj_t self_in, mp_obj_t float_obj) {
+static mp_obj_t tensor_quantize_float_to_int8(mp_obj_t self_in, mp_obj_t float_obj) {
 
     // Check that the object received is a float
     if (!mp_obj_is_float(float_obj)) {
@@ -144,7 +144,7 @@ STATIC mp_obj_t tensor_quantize_float_to_int8(mp_obj_t self_in, mp_obj_t float_o
 }
 
 
-STATIC mp_obj_t tensor_quantize_int8_to_float (mp_obj_t self_in, mp_obj_t int_obj) {
+static mp_obj_t tensor_quantize_int8_to_float (mp_obj_t self_in, mp_obj_t int_obj) {
 
     // Check that the object received is an int
     if (!mp_obj_is_integer(int_obj)) {
@@ -178,7 +178,7 @@ MP_DEFINE_CONST_FUN_OBJ_2(microlite_tensor_quantize_float_to_int8, tensor_quanti
 MP_DEFINE_CONST_FUN_OBJ_2(microlite_tensor_quantize_int8_to_float, tensor_quantize_int8_to_float);
 
 
-STATIC void tensor_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+static void tensor_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
     // Ignore the kind parameter
     (void)kind;
 
@@ -203,7 +203,7 @@ STATIC void tensor_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kin
 // getType - returns the type of the tensor
 // quantizeFloatToInt8 - quantizes a float tensor to an int8 tensor
 // quantizeInt8ToFloat - quantizes an int8 tensor to a float tensor
-STATIC const mp_rom_map_elem_t tensor_locals_dict_table[] = {
+static const mp_rom_map_elem_t tensor_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_getValue), MP_ROM_PTR(&microlite_tensor_get_value) },
     { MP_ROM_QSTR(MP_QSTR_setValue), MP_ROM_PTR(&microlite_tensor_set_value) },
     { MP_ROM_QSTR(MP_QSTR_getType), MP_ROM_PTR(&microlite_tensor_get_tensor_type) },
@@ -212,10 +212,10 @@ STATIC const mp_rom_map_elem_t tensor_locals_dict_table[] = {
 };
 
 
-STATIC MP_DEFINE_CONST_DICT(tensor_locals_dict, tensor_locals_dict_table);
+static MP_DEFINE_CONST_DICT(tensor_locals_dict, tensor_locals_dict_table);
 
 
-STATIC MP_DEFINE_CONST_OBJ_TYPE(
+static MP_DEFINE_CONST_OBJ_TYPE(
         microlite_tensor_type,
         MP_QSTR_tensor,
         MP_TYPE_FLAG_NONE,
@@ -226,10 +226,10 @@ STATIC MP_DEFINE_CONST_OBJ_TYPE(
 
 // Interpreter Object ================================================
 
-STATIC const mp_obj_type_t microlite_interpreter_type;
+static const mp_obj_type_t microlite_interpreter_type;
 
 
-STATIC mp_obj_t interpreter_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
+static mp_obj_t interpreter_make_new(const mp_obj_type_t *type, size_t n_args, size_t n_kw, const mp_obj_t *args) {
     // Args:
     //  - model
     //  - size of the tensor arena
@@ -294,7 +294,7 @@ STATIC mp_obj_t interpreter_make_new(const mp_obj_type_t *type, size_t n_args, s
 }
 
 
-STATIC mp_obj_t interpreter_invoke(mp_obj_t self_in) {
+static mp_obj_t interpreter_invoke(mp_obj_t self_in) {
 
     // Get the interpreter object
     microlite_interpreter_obj_t *self = MP_OBJ_TO_PTR(self_in);
@@ -310,7 +310,7 @@ STATIC mp_obj_t interpreter_invoke(mp_obj_t self_in) {
 }
 
 
-STATIC mp_obj_t interpreter_get_input_tensor(mp_obj_t self_in, mp_obj_t index_obj) {
+static mp_obj_t interpreter_get_input_tensor(mp_obj_t self_in, mp_obj_t index_obj) {
 
     // Convert the index to an unsigned integer
     mp_uint_t index = mp_obj_int_get_uint_checked(index_obj);
@@ -336,7 +336,7 @@ STATIC mp_obj_t interpreter_get_input_tensor(mp_obj_t self_in, mp_obj_t index_ob
 }
 
 
-STATIC mp_obj_t interpreter_get_output_tensor(mp_obj_t self_in, mp_obj_t index_obj) {
+static mp_obj_t interpreter_get_output_tensor(mp_obj_t self_in, mp_obj_t index_obj) {
     // Convert the index to an unsigned integer
     mp_uint_t index = mp_obj_int_get_uint_checked(index_obj);
 
@@ -366,7 +366,7 @@ MP_DEFINE_CONST_FUN_OBJ_2(microlite_interpreter_get_input_tensor, interpreter_ge
 MP_DEFINE_CONST_FUN_OBJ_2(microlite_interpreter_get_output_tensor, interpreter_get_output_tensor);
 
 
-STATIC void interpreter_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
+static void interpreter_print(const mp_print_t *print, mp_obj_t self_in, mp_print_kind_t kind) {
     // Ignore the kind parameter
     (void)kind;
 
@@ -389,17 +389,17 @@ STATIC void interpreter_print(const mp_print_t *print, mp_obj_t self_in, mp_prin
 // Invoke - Invokes the interpreter
 // getInputTensor - Returns the input tensor
 // getOutputTensor - Returns the output tensor
-STATIC const mp_rom_map_elem_t interpreter_locals_dict_table[] = {
+static const mp_rom_map_elem_t interpreter_locals_dict_table[] = {
     { MP_ROM_QSTR(MP_QSTR_invoke), MP_ROM_PTR(&microlite_interpreter_invoke) },
     { MP_ROM_QSTR(MP_QSTR_getInputTensor), MP_ROM_PTR(&microlite_interpreter_get_input_tensor) },
     { MP_ROM_QSTR(MP_QSTR_getOutputTensor), MP_ROM_PTR(&microlite_interpreter_get_output_tensor) },
 };
 
 
-STATIC MP_DEFINE_CONST_DICT(interpreter_locals_dict, interpreter_locals_dict_table);
+static MP_DEFINE_CONST_DICT(interpreter_locals_dict, interpreter_locals_dict_table);
 
 
-STATIC MP_DEFINE_CONST_OBJ_TYPE(
+static MP_DEFINE_CONST_OBJ_TYPE(
         microlite_interpreter_type,
         MP_QSTR_interpreter,
         MP_TYPE_FLAG_NONE,
@@ -412,10 +412,10 @@ STATIC MP_DEFINE_CONST_OBJ_TYPE(
 
 
 // The microlite __version__ string
-STATIC const MP_DEFINE_STR_OBJ(microlite_version_string_obj, TFLITE_MICRO_VERSION);
+static const MP_DEFINE_STR_OBJ(microlite_version_string_obj, TFLITE_MICRO_VERSION);
 
 
-STATIC const mp_rom_map_elem_t microlite_module_globals_table[] = {
+static const mp_rom_map_elem_t microlite_module_globals_table[] = {
     { MP_ROM_QSTR(MP_QSTR___name__), MP_ROM_QSTR(MP_QSTR_microlite) },
     { MP_ROM_QSTR(MP_QSTR___version__), MP_ROM_PTR(&microlite_version_string_obj) },
 
@@ -424,7 +424,7 @@ STATIC const mp_rom_map_elem_t microlite_module_globals_table[] = {
 };
 
 
-STATIC MP_DEFINE_CONST_DICT(microlite_module_globals, microlite_module_globals_table);
+static MP_DEFINE_CONST_DICT(microlite_module_globals, microlite_module_globals_table);
 
 
 // Module Object ================================================

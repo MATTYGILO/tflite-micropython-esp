@@ -9,3 +9,4 @@ boards/**/managed_components/
 # Lock files under boards/**
 boards/**/dependencies.lock
 boards/**/*.lock
+/.idea/**
