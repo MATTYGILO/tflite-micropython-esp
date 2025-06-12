@@ -53,7 +53,7 @@ pushd boards/${BOARD} >/dev/null
 rm -rf build
 
 
-cd ../../third_party/micropython/ports/esp32
+# cd ../../third_party/micropython/ports/esp32
 
 # Inject flags so that:
 #  • C builds drop -Werror=stringop-overflow
