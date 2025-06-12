@@ -137,9 +137,15 @@ file(GLOB TF_MICRO_TFLITE_BRIDGE_SRCS
           "${TF_MICRO_DIR}/tflite_bridge/*.cc"
           "${TF_MICRO_DIR}/tflite_bridge/*.c")
 
+if (CONFIG_IDF_TARGET)
+file(GLOB TF_MLIR_API_SRCS
+        "${COMPILER_MLIR_DIR}/lite/core/api/error_reporter.cc"
+)
+else()
 file(GLOB TF_MLIR_API_SRCS
         "${CMAKE_CURRENT_LIST_DIR}/tflm/tensorflow/compiler/mlir/lite/core/api/error_reporter.cc"
 )
+endif()
 
 set (BOARD_ADDITIONAL_SRCS "")
 
