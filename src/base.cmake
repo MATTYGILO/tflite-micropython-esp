@@ -48,6 +48,7 @@ if (CONFIG_IDF_TARGET)
     set(TF_ESP_DIR "${CMAKE_CURRENT_LIST_DIR}/../third_party/esp-tflite-micro")
     set(TF_LITE_DIR "${TF_ESP_DIR}/tensorflow/lite")
     set(TF_MICRO_DIR "${TF_LITE_DIR}/micro")
+    set(COMPILER_MLIR_DIR "${TF_ESP_DIR}/tensorflow/compiler/mlir")
     set(TF_MICROLITE_LOG
             ${TF_MICRO_DIR}/debug_log.cc
             ${TF_MICRO_DIR}/micro_time.cc
@@ -136,6 +137,10 @@ file(GLOB TF_MICRO_TFLITE_BRIDGE_SRCS
           "${TF_MICRO_DIR}/tflite_bridge/*.cc"
           "${TF_MICRO_DIR}/tflite_bridge/*.c")
 
+file(GLOB TF_MLIR_API_SRCS
+        "${CMAKE_CURRENT_LIST_DIR}/tflm/tensorflow/compiler/mlir/lite/core/api/error_reporter.cc"
+)
+
 set (BOARD_ADDITIONAL_SRCS "")
 
 if (CONFIG_IDF_TARGET)
@@ -162,7 +167,6 @@ endif()
 #   microlite micropython module sources
 set (MICROLITE_PYTHON_SRCS
     ${CMAKE_CURRENT_LIST_DIR}/microlite/tensorflow-microlite.c
-    ${CMAKE_CURRENT_LIST_DIR}/microlite/micropython-error-reporter.cpp
 )
 
 if (CONFIG_IDF_TARGET)
@@ -195,6 +199,9 @@ target_sources(microlite INTERFACE
     ${TF_MICROLITE_LOG}
     ${ESP_NN_SRCS} # include esp-nn sources for Espressif chipsets
     ${ESP_NN_WRAPPERS} # add tflm wrappers for ESP_NN
+
+    ${TF_MLIR_API_SRCS}
+
     )
 
 if (CONFIG_IDF_TARGET)
@@ -239,6 +246,7 @@ target_include_directories(microlite INTERFACE
     ${CMAKE_CURRENT_LIST_DIR}/tflm/third_party/flatbuffers/include
     ${CMAKE_CURRENT_LIST_DIR}/tflm/third_party/gemmlowp
     ${CMAKE_CURRENT_LIST_DIR}/tflm/third_party/ruy
+    ${CMAKE_CURRENT_LIST_DIR}/tflm/tensorflow/compiler/mlir
 )
 endif()
 

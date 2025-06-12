@@ -13,3 +13,7 @@ message (STATUS "mpconfigboard.cmake: PROJECT_DIR=${PROJECT_DIR}")
 set(USER_C_MODULES
     ${PROJECT_DIR}/src/full.cmake
 )
+
+if(NOT MICROPY_FROZEN_MANIFEST)
+    set(MICROPY_FROZEN_MANIFEST ${PROJECT_DIR}/src/manifest.py)
+endif()
