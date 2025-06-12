@@ -6,17 +6,14 @@
 // Copied and modified for using with newer tflite-micro sources
 
 #include "python_ops_resolver.h"
-#include "tensorflow/lite/micro/tflite_bridge/micro_error_reporter.h"
 #include "tensorflow/lite/micro/micro_interpreter.h"
 #include "tensorflow/lite/schema/schema_generated.h"
 
 #include "tensorflow-microlite.h"
 #include "openmv-libtf.h"
-#include "micropython-error-reporter.h"
 #include <stdio.h>
 
 extern "C" {
-    static microlite::MicropythonErrorReporter micro_error_reporter;
 /*
  Return the index'th tensor
  */
@@ -59,9 +56,6 @@ extern "C" {
 
     int libtf_interpreter_init(microlite_interpreter_obj_t *microlite_interpreter) {
 
-        // The error reporter
-        tflite::ErrorReporter *error_reporter = &micro_error_reporter;
-
         // Get the tflite model from the model data
         const tflite::Model *model = tflite::GetModel(microlite_interpreter->model_data->items);
 
@@ -74,9 +68,6 @@ extern "C" {
         //      error_reporter->Report("Align failed!");
         //      return 1;
         //  }
-
-        // Set the tensorflow error reporter
-        microlite_interpreter->tf_error_reporter = (mp_obj_t)error_reporter;
 
         // Set the tensorflow model
         microlite_interpreter->tf_model = (mp_obj_t)model;

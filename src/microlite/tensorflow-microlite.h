@@ -56,7 +56,6 @@ typedef struct _microlite_interpreter_obj_t {
     mp_obj_array_t  *tensor_arena;
     mp_obj_t tf_interpreter;
     mp_obj_t tf_model;
-    mp_obj_t tf_error_reporter;
     int16_t inference_count;
     mp_obj_t input_callback;
     mp_obj_t output_callback;

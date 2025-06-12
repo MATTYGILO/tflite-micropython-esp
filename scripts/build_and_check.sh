@@ -2,6 +2,17 @@
 
 set -e
 
+# Print/speak build completion on exit (whether successful or not)
+function finish {
+    echo "Build complete for board ${BOARD}"
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        say "Finished building"
+    else
+        echo "Build complete"
+    fi
+}
+trap finish EXIT
+
 BOARD=${1:-MICROLITE}
 IDF_VERSION=${IDF_VERSION:-v5.2.2}
 
@@ -41,6 +52,9 @@ popd >/dev/null
 pushd boards/${BOARD} >/dev/null
 rm -rf build
 
+
+cd ../../third_party/micropython/ports/esp32
+
 # Inject flags so that:
 #  • C builds drop -Werror=stringop-overflow
 #  • C++ builds retain -fno-rtti
@@ -51,4 +65,4 @@ chmod +x ../../scripts/assemble-unified-image-esp.sh
 ../../scripts/assemble-unified-image-esp.sh ../../third_party/micropython/ports/esp32
 popd >/dev/null
 
-echo "Build complete for board ${BOARD}" 
+# (No need for a final echo/say here—it's handled by the EXIT trap.)
