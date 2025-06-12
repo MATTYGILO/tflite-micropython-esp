@@ -53,8 +53,6 @@ pushd boards/${BOARD} >/dev/null
 rm -rf build
 
 
-# cd ../../third_party/micropython/ports/esp32
-
 # Inject flags so that:
 #  • C builds drop -Werror=stringop-overflow
 #  • C++ builds retain -fno-rtti
@@ -64,5 +62,3 @@ idf.py build -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflo
 chmod +x ../../scripts/assemble-unified-image-esp.sh
 ../../scripts/assemble-unified-image-esp.sh ../../third_party/micropython/ports/esp32
 popd >/dev/null
-
-# (No need for a final echo/say here—it's handled by the EXIT trap.)
