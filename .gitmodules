@@ -11,6 +11,3 @@
 	path = third_party/micropython
 	url = https://github.com/micropython/micropython.git
 	branch = v1.24-release
-[submodule "third_party/esp-tflite-micro"]
-	path = third_party/esp-tflite-micro
-	url = https://github.com/espressif/esp-tflite-micro.git
