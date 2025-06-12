@@ -46,9 +46,10 @@ add_library(microlite INTERFACE)
 
 if (CONFIG_IDF_TARGET)
     set(TF_ESP_DIR "${CMAKE_CURRENT_LIST_DIR}/../third_party/esp-tflite-micro")
-    set(TF_LITE_DIR "${TF_ESP_DIR}/tensorflow/lite")
+    set(TF_DIR "${TF_ESP_DIR}/tensorflow")
+    set(TF_LITE_DIR "${TF_DIR}/lite")
     set(TF_MICRO_DIR "${TF_LITE_DIR}/micro")
-    set(COMPILER_MLIR_DIR "${TF_ESP_DIR}/tensorflow/compiler/mlir")
+    set(COMPILER_MLIR_DIR "${TF_DIR}/compiler/mlir")
     set(TF_MICROLITE_LOG
             ${TF_MICRO_DIR}/debug_log.cc
             ${TF_MICRO_DIR}/micro_time.cc
@@ -138,7 +139,8 @@ file(GLOB TF_MICRO_TFLITE_BRIDGE_SRCS
           "${TF_MICRO_DIR}/tflite_bridge/*.c")
 
 file(GLOB TF_MLIR_API_SRCS
-        "${CMAKE_CURRENT_LIST_DIR}/tflm/tensorflow/compiler/mlir/lite/core/api/error_reporter.cc"
+        "${COMPILER_MLIR_DIR}/lite/core/api/error_reporter.cc"
+        "${COMPILER_MLIR_DIR}/lite/schema/schema_utils.cc"
 )
 
 set (BOARD_ADDITIONAL_SRCS "")
