@@ -45,7 +45,7 @@ add_library(microlite INTERFACE)
 # )
 
 if (CONFIG_IDF_TARGET)
-    set(TF_ESP_DIR "${CMAKE_CURRENT_LIST_DIR}/../third_party/tflite-micro-esp-examples/components/esp-tflite-micro")
+    set(TF_ESP_DIR "${CMAKE_CURRENT_LIST_DIR}/../third_party/esp-tflite-micro")
     set(TF_LITE_DIR "${TF_ESP_DIR}/tensorflow/lite")
     set(TF_MICRO_DIR "${TF_LITE_DIR}/micro")
     set(TF_MICROLITE_LOG

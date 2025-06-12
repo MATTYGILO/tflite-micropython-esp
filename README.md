@@ -32,7 +32,6 @@ When building with ESP-IDF 5.4 the following submodule commits have been verifie
 - **esp-tflite-micro**: `772214721682ef2d3eed09cafea777edad55541f`
 - **esp-nn**: `12129cf04b09af0023127ca7551dc1a363344211`
 - **micropython-ulab**: `a05ec05351260cf48fefc347265b8d8bf29c03f1`
-- **tflite-micro-esp-examples**: `2d95a9c37fa6937720859e8a497b69837f7d6982`
 
 These versions are pinned via Git submodules. After cloning the repository run
 `git submodule update --init --recursive` to fetch the correct revisions.
