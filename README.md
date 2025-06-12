@@ -36,3 +36,4 @@ When building with ESP-IDF 5.4 the following submodule commits have been verifie
 These versions are pinned via Git submodules. After cloning the repository run
 `git submodule update --init --recursive` to fetch the correct revisions.
 If Git submodules cannot be fetched directly (for example in environments without full Git access), run `scripts/fetch_submodules.sh` which downloads the same revisions using plain HTTP archives.
+
