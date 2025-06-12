@@ -14,3 +14,4 @@
 	path = third_party/esp-tflite-micro
 	url = https://github.com/espressif/esp-tflite-micro.git
 	branch = master
+
