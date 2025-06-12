@@ -39,8 +39,6 @@ extern "C" {
 #include "py/objstr.h"
 #include "py/objarray.h"
 
-#include "tensorflow/lite/experimental/microfrontend/lib/frontend.h"
-#include "tensorflow/lite/experimental/microfrontend/lib/frontend_util.h"
 
 // TODO #15 get this from the tensorflow submodule via a ci script
 #define TFLITE_MICRO_VERSION "TODO: Give this a real version later. This use to be the version of mocleiris repo"
