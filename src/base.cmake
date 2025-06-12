@@ -76,13 +76,6 @@ file(GLOB TF_LITE_API_SRCS
           "${TF_LITE_DIR}/core/api/*.c")
 endif()
 
-# lite experimental
-
-file(GLOB TF_LITE_MICROFRONTEND_SRCS
-          "${TF_LITE_DIR}/experimental/microfrontend/lib/*.c"
-          "${TF_LITE_DIR}/experimental/microfrontend/lib/*.cc"
-          "${TF_LITE_DIR}/experimental/microfrontend/lib/*.cpp")
-
 # lite kernels
 
 file(GLOB TF_LITE_KERNELS_SRCS
@@ -189,7 +182,6 @@ target_sources(microlite INTERFACE
     # tf lite sources
     ${TF_LITE_C_SRCS}
     ${TF_LITE_API_SRCS}
-    ${TF_LITE_MICROFRONTEND_SRCS}
     ${TF_LITE_KERNELS_SRCS}
     ${TF_LITE_SCHEMA_SRCS}
 
