@@ -3,7 +3,7 @@
 set -e
 
 BOARD=${1:-MICROLITE}
-IDF_VERSION=${IDF_VERSION:-v5.4}
+IDF_VERSION=${IDF_VERSION:-v5.2.2}
 
 # Update submodules required for build
 if [ ! -d third_party/micropython ]; then
@@ -44,10 +44,9 @@ rm -rf build
 # Inject flags so that:
 #  • C builds drop -Werror=stringop-overflow
 #  • C++ builds retain -fno-rtti
-idf.py fullclean \
-    -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
-    -DCMAKE_CXX_FLAGS="-fno-rtti" \
-    build
+idf.py clean
+idf.py build -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
+              -DCMAKE_CXX_FLAGS="-fno-rtti"
 chmod +x ../../scripts/assemble-unified-image-esp.sh
 ../../scripts/assemble-unified-image-esp.sh ../../third_party/micropython/ports/esp32
 popd >/dev/null
