@@ -1,9 +1,11 @@
 [submodule "third_party/esp-nn"]
 	path = third_party/esp-nn
 	url = https://github.com/espressif/esp-nn.git
+	branch = master
 [submodule "third_party/micropython-ulab"]
 	path = third_party/micropython-ulab
 	url = https://github.com/v923z/micropython-ulab.git
+	branch = master
 [submodule "third_party/micropython"]
 	path = third_party/micropython
 	url = https://github.com/micropython/micropython.git
