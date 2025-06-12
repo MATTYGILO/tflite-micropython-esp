@@ -8,4 +8,4 @@ get_filename_component(MICROPY_DIR "../../../third_party/micropython" ABSOLUTE)
 message (STATUS "microlite/main/cmake: MICROPY_DIR=${MICROPY_DIR}")
 
 set(PROJECT_DIR ${MICROPY_DIR}/ports/esp32)
-include(${PROJECT_DIR}/main/CMakeLists.txt)
+include(${PROJECT_DIR}/main_esp32s2/CMakeLists.txt)
