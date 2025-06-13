@@ -10,3 +10,5 @@ boards/**/managed_components/
 boards/**/dependencies.lock
 boards/**/*.lock
 /.idea/**
+
+AGENT.md
