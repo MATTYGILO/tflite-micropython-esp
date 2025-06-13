@@ -42,7 +42,8 @@ source ./esp-idf/export.sh
 
 pip3 install pyelftools
 pip3 install ar
-pip3 install uf2conv
+# Ensure uf2conv.py is importable by setting PYTHONPATH
+export PYTHONPATH="$(pwd)/third_party/micropython/tools${PYTHONPATH:+:$PYTHONPATH}"
 
 # Build micropython cross compiler
 pushd third_party/micropython >/dev/null
@@ -63,4 +64,3 @@ idf.py build -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflo
 chmod +x ../../scripts/assemble-unified-image-esp.sh
 ../../scripts/assemble-unified-image-esp.sh ../../third_party/micropython/ports/esp32
 popd >/dev/null
-
