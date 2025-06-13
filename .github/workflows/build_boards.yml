@@ -27,7 +27,7 @@ jobs:
 #          'MICROLITE_C3',
 #          'MICROLITE_C3_USB',
 #          'MICROLITE_S2_SPIRAM',
-          'MICROLITE_S3',
+#          'MICROLITE_S3',
 #          'MICROLITE_S3_SPIRAM',
           'MICROLITE_S3_SPIRAM_OCTAL',
 #          'MICROLITE_SPIRAM',
