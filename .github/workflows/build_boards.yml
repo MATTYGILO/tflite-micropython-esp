@@ -2,12 +2,16 @@ name: Build ESP32
 
 on:
   push:
+    branches:
+      - main
     paths-ignore:
       - 'docs/**'
       - 'manage/**'
       - 'assets/**'
       - 'README.md'
   pull_request:
+    branches:
+      - main
     paths-ignore:
       - 'examples/**'
       - 'assets/**'
@@ -29,7 +33,7 @@ jobs:
 #          'MICROLITE_S2_SPIRAM',
 #          'MICROLITE_S3',
 #          'MICROLITE_S3_SPIRAM',
-          'MICROLITE_S3_SPIRAM_OCTAL',
+#          'MICROLITE_S3_SPIRAM_OCTAL',
 #          'MICROLITE_SPIRAM',
 #          'MICROLITE_SPIRAM_16M',
 #          'MICROLITE_SPIRAM_CAM'
@@ -48,11 +52,6 @@ jobs:
         run: |
           chmod +x ./scripts/build_and_check.sh
           ./scripts/build_and_check.sh ${{ matrix.board_type }}
-
-      - name: Assemble unified image
-        run: |
-          cd ./boards/${{ matrix.board_type }}
-          chmod +x ../../scripts/assemble-unified-image-esp.sh
 
       - name: Archive Firmware
         uses: actions/upload-artifact@v4
