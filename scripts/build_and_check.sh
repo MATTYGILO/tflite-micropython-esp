@@ -32,10 +32,10 @@ popd >/dev/null
 # Fetch esp-idf if not already present
 if [ ! -d esp-idf ]; then
     git clone --branch "$IDF_VERSION" --depth 1 --recursive https://github.com/espressif/esp-idf.git
-    pushd esp-idf >/dev/null
-    ./install.sh
-    popd >/dev/null
 fi
+pushd esp-idf >/dev/null
+./install.sh
+popd >/dev/null
 
 # Source esp-idf environment
 source ./esp-idf/export.sh
