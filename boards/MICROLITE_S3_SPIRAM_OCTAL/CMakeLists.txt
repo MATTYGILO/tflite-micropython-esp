@@ -32,3 +32,4 @@ set(ENV{IDF_COMPONENT_MANAGER} "1")
 # Include main IDF cmake file and define the project.
 include($ENV{IDF_PATH}/tools/cmake/project.cmake)
 project(micropython)
+
