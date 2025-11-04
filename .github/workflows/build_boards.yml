@@ -3,7 +3,7 @@ name: Build ESP32
 on:
   push:
     branches:
-      - main
+      - v1.26-release
     paths-ignore:
       - 'docs/**'
       - 'manage/**'
@@ -33,7 +33,7 @@ jobs:
 #          'MICROLITE_S2_SPIRAM',
 #          'MICROLITE_S3',
 #          'MICROLITE_S3_SPIRAM',
-#          'MICROLITE_S3_SPIRAM_OCTAL',
+          'MICROLITE_S3_SPIRAM_OCTAL',
 #          'MICROLITE_SPIRAM',
 #          'MICROLITE_SPIRAM_16M',
 #          'MICROLITE_SPIRAM_CAM'
