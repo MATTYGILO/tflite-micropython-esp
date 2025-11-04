@@ -4,22 +4,6 @@ on:
   push:
     branches:
       - v1.26-release
-    paths-ignore:
-      - 'docs/**'
-      - 'manage/**'
-      - 'assets/**'
-      - 'README.md'
-  pull_request:
-    branches:
-      - main
-    paths-ignore:
-      - 'examples/**'
-      - 'assets/**'
-      - 'README.md'
-      - 'ci/*unix*.sh'
-      - '.github/workflows/build_unix.yml'
-      - 'docs/**'
-      - 'manage/**'
 
 jobs:
   build:
