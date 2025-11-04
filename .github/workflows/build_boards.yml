@@ -3,7 +3,7 @@ name: Build ESP32
 on:
   push:
     branches:
-      - main
+      - v1.26-release
     paths-ignore:
       - 'docs/**'
       - 'manage/**'
