@@ -14,7 +14,7 @@ function finish {
 trap finish EXIT
 
 BOARD=${1:-MICROLITE}
-IDF_VERSION=${IDF_VERSION:-v5.2.2}
+IDF_VERSION=${IDF_VERSION:-v5.3.3}
 
 # Update submodules required for build
 if [ ! -d third_party/micropython ]; then
