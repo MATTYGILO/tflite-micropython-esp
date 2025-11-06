@@ -129,7 +129,7 @@ static mp_obj_t tensor_quantize_float_to_int8(mp_obj_t self_in, mp_obj_t float_o
 
     // Check that the tensor is of type int8
     if (tensor->type != kTfLiteInt8) {
-        mp_raise_TypeError ("Expected Tensor to be of type ktfLiteInt8.");
+        mp_raise_TypeError(MP_ERROR_TEXT("Expected Tensor to be of type ktfLiteInt8."));
     }
 
     // Converts the object to a float
