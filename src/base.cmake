@@ -285,5 +285,5 @@ if (CONFIG_IDF_TARGET_ESP32S3) # Extra compile options needed to build esp-nn AS
     target_compile_options(microlite INTERFACE -mlongcalls -fno-unroll-loops -Wno-unused-function)
 endif()
 
-target_link_libraries(usermod_microlite INTERFACE microlite)
+target_link_libraries(usermod INTERFACE microlite)
 micropy_gather_target_properties(microlite)
