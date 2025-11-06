@@ -56,7 +56,7 @@ static mp_obj_t tensor_get_value(mp_obj_t self_in, mp_obj_t index_obj) {
     }
     // Otherwise, raise an error
     else {
-        mp_raise_TypeError("Unsupported Tensor Type");
+        mp_raise_TypeError(MP_ERROR_TEXT("Unsupported Tensor Type"));
     }
 
     // Return none
@@ -91,7 +91,7 @@ static mp_obj_t tensor_set_value (mp_obj_t self_in, mp_obj_t index_obj, mp_obj_t
     }
     // Otherwise, raise an error
     else {
-        mp_raise_TypeError("Unsupported Tensor Type");
+        mp_raise_TypeError(MP_ERROR_TEXT("Unsupported Tensor Type"));
     }
 
     // Return our tensor object
@@ -120,7 +120,7 @@ static mp_obj_t tensor_quantize_float_to_int8(mp_obj_t self_in, mp_obj_t float_o
     // Check that the object received is a float
     if (!mp_obj_is_float(float_obj)) {
         // Raise an error
-        mp_raise_TypeError("Expecting Parameter of float type");
+        mp_raise_TypeError(MP_ERROR_TEXT("Expecting Parameter of float type"));
     }
 
     // Get our tensor object
@@ -148,7 +148,7 @@ static mp_obj_t tensor_quantize_int8_to_float (mp_obj_t self_in, mp_obj_t int_ob
 
     // Check that the object received is an int
     if (!mp_obj_is_integer(int_obj)) {
-        mp_raise_TypeError("Expecting Parameter of float type");
+        mp_raise_TypeError(MP_ERROR_TEXT("Expecting Parameter of float type"));
     }
 
     // Get our tensor object
@@ -157,7 +157,7 @@ static mp_obj_t tensor_quantize_int8_to_float (mp_obj_t self_in, mp_obj_t int_ob
 
     // Check that the tensor is of type int8
     if (tensor->type != kTfLiteInt8) {
-        mp_raise_TypeError("Expected Tensor to be of type ktfLiteInt8.");
+        mp_raise_TypeError(MP_ERROR_TEXT("Expected Tensor to be of type ktfLiteInt8."));
     }
 
     // Get the int8 value from the object

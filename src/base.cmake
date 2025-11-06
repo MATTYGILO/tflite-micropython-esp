@@ -275,8 +275,8 @@ target_compile_options(microlite INTERFACE
     -Wno-error=pointer-arith
     -Wno-error=unused-const-variable
     -Wno-error=sign-compare
-    -fno-rtti
-    -fno-exceptions
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
+    $<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions>
     -O3
     -Wno-error=maybe-uninitialized
 )
