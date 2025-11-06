@@ -24,9 +24,10 @@
 # THE SOFTWARE.
 #/
 
-if(NOT MICROPY_DIR)
-    get_filename_component(MICROPY_DIR ${PROJECT_DIR}/../.. ABSOLUTE)
-endif()
+# Log the PROJECT_DIR value
+message (STATUS "PROJECT_DIR=${PROJECT_DIR}")
+
+get_filename_component(MICROPY_DIR ${CMAKE_CURRENT_LIST_DIR}/../third_party/micropython ABSOLUTE)
 
 # `py.cmake` for `micropy_gather_target_properties` macro usage
 include(${MICROPY_DIR}/py/py.cmake)
@@ -284,5 +285,5 @@ if (CONFIG_IDF_TARGET_ESP32S3) # Extra compile options needed to build esp-nn AS
     target_compile_options(microlite INTERFACE -mlongcalls -fno-unroll-loops -Wno-unused-function)
 endif()
 
-target_link_libraries(usermod INTERFACE microlite)
+target_link_libraries(usermod_microlite INTERFACE microlite)
 micropy_gather_target_properties(microlite)
