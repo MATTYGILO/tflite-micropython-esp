@@ -16,6 +16,9 @@ trap finish EXIT
 BOARD=${1:-MICROLITE}
 IDF_VERSION=${IDF_VERSION:-v5.4.2}
 
+# Define the absolute path to the micropython folder
+export MICROPYTHON_PATH="$(pwd)/third_party/micropython"
+
 # Update submodules required for build
 if [ ! -d third_party/micropython ]; then
     echo "Micropython submodule missing" >&2
@@ -46,12 +49,12 @@ pip3 install ar
 export PYTHONPATH="$(pwd)/third_party/micropython/tools${PYTHONPATH:+:$PYTHONPATH}"
 
 # Build micropython cross compiler
-pushd third_party/micropython >/dev/null
+pushd MICROPYTHON_PATH >/dev/null
 make -C mpy-cross V=1 clean all
 popd >/dev/null
 
 # Build firmware for the selected board
-pushd boards/${BOARD} >/dev/null
+pushd firmware/boards/${BOARD} >/dev/null
 rm -rf build
 
 
@@ -68,7 +71,7 @@ idf.py build -DMICROPY_BOARD=ESP32_GENERIC_S3 \
               -DMICROPY_BOARD_VARIANT=SPIRAM_OCT \
               -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
               -DCMAKE_CXX_FLAGS="-fno-rtti" \
-              -DMICROPY_USER_FROZEN_MANIFEST="third_party/micropython/ports/esp32/boards/manifest.py"
+              -DMICROPY_USER_FROZEN_MANIFEST="${MICROPYTHON_PATH}/ports/esp32/boards/manifest.py"
 
 chmod +x ../../scripts/assemble-unified-image-esp.sh
 ../../scripts/assemble-unified-image-esp.sh ../../third_party/micropython/ports/esp32
