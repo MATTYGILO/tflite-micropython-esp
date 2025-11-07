@@ -7,7 +7,3 @@ set(SDKCONFIG_DEFAULTS
     ${MICROPY_ESP32_DIR}/boards/sdkconfig.spiram_sx
     ${MICROPY_ESP32_DIR}/boards/ESP32_GENERIC_S3/sdkconfig.board
 )
-
-set(USER_C_MODULES
-    ${PROJECT_DIR}/src/full.cmake
-)
