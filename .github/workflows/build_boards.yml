@@ -43,7 +43,7 @@ jobs:
           name: microlite-esp32-${{ matrix.board_type }}-firmware
           path: |
             ./boards/${{ matrix.board_type }}/build/bootloader/bootloader.bin
-            ./boards/${{ matrix.board_type }}/build/partition_table/partition-table.bin  # yamllint disable-line rule:line-length
+            ./boards/${{ matrix.board_type }}/build/partition_table/partition-table.bin
             ./boards/${{ matrix.board_type }}/build/micropython.bin
             ./boards/${{ matrix.board_type }}/build/micropython.elf
 
