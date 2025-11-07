@@ -12,7 +12,7 @@ endif()
 
 
 # MICROPY_BOARD_DIR
-set(MICROPY_ESP32_DIR "${CMAKE_CURRENT_LIST_DIR}/third_party/micropython/ports/esp32")
+set(MICROPY_ESP32_DIR "${CMAKE_CURRENT_LIST_DIR}/../third_party/micropython/ports/esp32")
 
 # Set the board directory and check that it exists.
 if(NOT CUSTOM_BOARD_DIR)
@@ -64,7 +64,7 @@ set(SDKCONFIG_DEFAULTS ${CMAKE_BINARY_DIR}/sdkconfig.combined)
 
 # Build with our custom full.cmake file
 set(USER_C_MODULES
-    ${CMAKE_CURRENT_LIST_DIR}/src/full.cmake
+    ${CMAKE_CURRENT_LIST_DIR}/../src/full.cmake
 )
 
 # Include main IDF cmake file.
