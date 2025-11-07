@@ -59,30 +59,34 @@ pushd "${MICROPYTHON_PATH}" >/dev/null
 make -C mpy-cross V=1 clean all
 popd >/dev/null
 
-# Build firmware for the selected board
-# We intentionally cd into the board directory so each board keeps an isolated build/ directory.
-# NOTE: Relative references must go back to ROOT_DIR (three levels up from here) not two.
-BOARD_DIR="${ROOT_DIR}/firmware/boards/${BOARD}"
+# Define project and build directories
+FIRMWARE_DIR="${ROOT_DIR}/firmware"
+BOARD_DIR="${FIRMWARE_DIR}/boards/${BOARD}"
+BUILD_DIR="${BOARD_DIR}/build"
+
 if [ ! -d "${BOARD_DIR}" ]; then
     echo "Board directory does not exist: ${BOARD_DIR}" >&2
     exit 1
 fi
-pushd "${BOARD_DIR}" >/dev/null
-rm -rf build
 
-# Inject flags so that:
-#  • C builds drop -Werror=stringop-overflow
-#  • C++ builds retain -fno-rtti
-idf.py clean
+# Clean and build from the firmware project root, writing outputs into the board's build dir
+pushd "${FIRMWARE_DIR}" >/dev/null
 
-idf.py build \
+# Clean build dir if it exists
+if [ -d "${BUILD_DIR}" ]; then
+    idf.py -B "${BUILD_DIR}" clean || true
+fi
+
+idf.py -B "${BUILD_DIR}" build \
     -DMICROPY_BOARD=${BOARD} \
     -DMICROPY_BOARD_VARIANT=SPIRAM_OCT \
     -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
     -DCMAKE_CXX_FLAGS="-fno-rtti" \
     -DMICROPY_USER_FROZEN_MANIFEST="${MICROPYTHON_PATH}/ports/esp32/boards/manifest.py"
 
-# Assemble unified image (corrected path usage)
+popd >/dev/null
+
+# Assemble unified image (run from board directory so relative build/ paths in the script resolve)
 ASSEMBLE_SCRIPT="${ROOT_DIR}/scripts/assemble-unified-image-esp.sh"
 if [ ! -x "${ASSEMBLE_SCRIPT}" ]; then
     chmod +x "${ASSEMBLE_SCRIPT}" || true
@@ -98,6 +102,8 @@ if [ ! -d "${MP_PORTS_PATH}" ]; then
     exit 1
 fi
 
+pushd "${BOARD_DIR}" >/dev/null
 "${ASSEMBLE_SCRIPT}" "${MP_PORTS_PATH}"
 popd >/dev/null
+
 popd >/dev/null
