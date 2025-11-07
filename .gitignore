@@ -1,13 +1,13 @@
 /esp-idf/
 
 # Build directories under boards/**
-boards/**/build/
+firmware/boards/**/build/
 
 # Managed components under boards/**
-boards/**/managed_components/
+firmware/boards/**/managed_components/
 
 # Lock files under boards/**
-boards/**/dependencies.lock
+firmware/boards/**/dependencies.lock
 boards/**/*.lock
 /.idea/**
 
