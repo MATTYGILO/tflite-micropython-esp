@@ -84,7 +84,7 @@ Then import person_detection to run the example:
 # Running on an ESP32 With a Camera
 
 This has been tested using an ESP32-CAM-MB and an M5 Timer Camera using the 
-[MICROLITE_SPIRAM_CAM](../../boards/esp32/MICROLITE_SPIRAM_CAM) Firmware.
+[MICROLITE_SPIRAM_CAM](../../firmware/boards/esp32/MICROLITE_SPIRAM_CAM) Firmware.
 
 Flash that firmware and then copy the esp32-cam/person_detection_cam.py and person_detect_model.tflite
 model to the camera.
