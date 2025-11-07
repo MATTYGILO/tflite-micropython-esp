@@ -62,6 +62,8 @@ idf.py clean
 #idf.py build -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
 #              -DCMAKE_CXX_FLAGS="-fno-rtti"
 
+
+#              -DCMAKE_EXE_LINKER_FLAGS="-Wl,--gc-sections -Wl,--print-gc-sections" \
 idf.py build -DMICROPY_BOARD=ESP32_GENERIC_S3 \
               -DMICROPY_BOARD_VARIANT=SPIRAM_OCT \
               -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
