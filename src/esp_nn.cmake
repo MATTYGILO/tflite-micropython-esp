@@ -60,6 +60,7 @@ if (MICROLITE_PLATFORM STREQUAL "ESP32" OR
             "${ESP_NN_DIR}/src/convolution/esp_nn_depthwise_conv_s16_mult4_esp32s3.S"
             "${ESP_NN_DIR}/src/convolution/esp_nn_depthwise_conv_s16_mult8_esp32s3.S"
             "${ESP_NN_DIR}/src/fully_connected/esp_nn_fully_connected_s8_esp32s3.S"
+            "${ESP_NN_DIR}/src/fully_connected/esp_nn_fully_connected_per_ch_s8_esp32s3.S"
             "${ESP_NN_DIR}/src/pooling/esp_nn_max_pool_s8_esp32s3.S"
             "${ESP_NN_DIR}/src/pooling/esp_nn_avg_pool_s8_esp32s3.S")
     endif()
