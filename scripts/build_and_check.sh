@@ -49,7 +49,7 @@ pip3 install ar
 export PYTHONPATH="$(pwd)/third_party/micropython/tools${PYTHONPATH:+:$PYTHONPATH}"
 
 # Build micropython cross compiler
-pushd MICROPYTHON_PATH >/dev/null
+pushd "$MICROPYTHON_PATH" >/dev/null
 make -C mpy-cross V=1 clean all
 popd >/dev/null
 
