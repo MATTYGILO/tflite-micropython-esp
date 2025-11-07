@@ -24,26 +24,16 @@
 # THE SOFTWARE.
 #/
 
-# Log the PROJECT_DIR value
-message (STATUS "PROJECT_DIR=${PROJECT_DIR}")
-
-get_filename_component(MICROPY_DIR ${CMAKE_CURRENT_LIST_DIR}/../third_party/micropython ABSOLUTE)
+if(NOT MICROPY_DIR)
+    get_filename_component(MICROPY_DIR ${CMAKE_CURRENT_LIST_DIR}/../third_party/micropython ABSOLUTE)
+endif()
 
 # `py.cmake` for `micropy_gather_target_properties` macro usage
 include(${MICROPY_DIR}/py/py.cmake)
 
 include(${CMAKE_CURRENT_LIST_DIR}/esp_nn.cmake)
 
-get_filename_component(TENSORFLOW_DIR ${PROJECT_DIR}/../../../tensorflow ABSOLUTE)
-
 add_library(microlite INTERFACE)
-
-# needed when we have custom/specialized kernels.
-# add_custom_command(
-#     OUTPUT ${TF_MICROLITE_SPECIALIZED_SRCS}
-#     COMMAND cd ${TENSORFLOW_DIR} && ${Python3_EXECUTABLE} ${MICROPY_DIR}/py/makeversionhdr.py ${MICROPY_MPVERSION}
-#     DEPENDS MICROPY_FORCE_BUILD
-# )
 
 if (CONFIG_IDF_TARGET)
     set(TF_ESP_DIR "${CMAKE_CURRENT_LIST_DIR}/../third_party/esp-tflite-micro")

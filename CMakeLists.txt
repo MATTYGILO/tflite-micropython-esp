@@ -64,7 +64,7 @@ set(SDKCONFIG_DEFAULTS ${CMAKE_BINARY_DIR}/sdkconfig.combined)
 
 # Build with our custom full.cmake file
 set(USER_C_MODULES
-    ${PROJECT_DIR}/src/full.cmake
+    ${CMAKE_CURRENT_LIST_DIR}/src/full.cmake
 )
 
 # Include main IDF cmake file.
