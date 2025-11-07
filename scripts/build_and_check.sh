@@ -59,8 +59,15 @@ rm -rf build
 #  • C builds drop -Werror=stringop-overflow
 #  • C++ builds retain -fno-rtti
 idf.py clean
-idf.py build -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
-              -DCMAKE_CXX_FLAGS="-fno-rtti"
+#idf.py build -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
+#              -DCMAKE_CXX_FLAGS="-fno-rtti"
+
+idf.py build -DMICROPY_BOARD=ESP32_GENERIC_S3 \
+              -DMICROPY_BOARD_VARIANT=SPIRAM_OCT \
+              -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
+              -DCMAKE_CXX_FLAGS="-fno-rtti" \
+              -DMICROPY_USER_FROZEN_MANIFEST="third_party/micropython/ports/esp32/boards/manifest.py"
+
 chmod +x ../../scripts/assemble-unified-image-esp.sh
 ../../scripts/assemble-unified-image-esp.sh ../../third_party/micropython/ports/esp32
 popd >/dev/null
