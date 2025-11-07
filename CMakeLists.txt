@@ -12,6 +12,7 @@ endif()
 
 
 # MICROPY_BOARD_DIR
+set(MICROPY_ESP32_DIR "${CMAKE_CURRENT_LIST_DIR}/third_party/micropython/ports/esp32")
 
 # Set the board directory and check that it exists.
 if(NOT CUSTOM_BOARD_DIR)
