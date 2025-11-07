@@ -22,6 +22,9 @@ if(NOT EXISTS ${CUSTOM_BOARD_DIR}/mpconfigboard.cmake)
     message(FATAL_ERROR "Invalid MICROPY_BOARD specified: ${MICROPY_BOARD}")
 endif()
 
+# Make the board dir available to sub-builds (used by esp32_common.cmake for include paths)
+set(MICROPY_BOARD_DIR ${CUSTOM_BOARD_DIR} CACHE PATH "Path to MicroPython board directory")
+
 # If a board variant is specified, check that it exists.
 if(MICROPY_BOARD_VARIANT)
     if(NOT EXISTS ${CUSTOM_BOARD_DIR}/mpconfigvariant_${MICROPY_BOARD_VARIANT}.cmake)

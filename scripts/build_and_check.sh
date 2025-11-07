@@ -16,7 +16,7 @@ function finish {
 }
 trap finish EXIT
 
-BOARD=${1:-MICROLITE}
+BOARD=${1:-ESP32_GENERIC_S3}
 IDF_VERSION=${IDF_VERSION:-v5.4.2}
 
 # Define the absolute path to the micropython folder
@@ -79,6 +79,7 @@ fi
 
 idf.py -B "${BUILD_DIR}" build \
     -DMICROPY_BOARD=${BOARD} \
+    -DMICROPY_BOARD_DIR="${BOARD_DIR}" \
     -DMICROPY_BOARD_VARIANT=SPIRAM_OCT \
     -DCMAKE_C_FLAGS="-Wno-error=stringop-overflow -Wno-stringop-overflow" \
     -DCMAKE_CXX_FLAGS="-fno-rtti" \
