@@ -280,6 +280,8 @@ target_compile_options(microlite INTERFACE
     -Wno-error=maybe-uninitialized
 )
 
+target_compile_features(microlite INTERFACE cxx_std_11)
+
 if (CONFIG_IDF_TARGET_ESP32S3) # Extra compile options needed to build esp-nn ASM for ESP32-S3
     target_compile_options(microlite INTERFACE -mlongcalls -fno-unroll-loops -Wno-unused-function)
 endif()

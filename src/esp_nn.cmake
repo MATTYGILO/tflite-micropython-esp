@@ -21,8 +21,6 @@ if (MICROLITE_PLATFORM STREQUAL "ESP32" OR
     MICROLITE_PLATFORM STREQUAL "ESP32C3" OR
     MICROLITE_PLATFORM STREQUAL "ESP32S2")
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -stdlib=libc++")
     set(ESP_NN_DIR "${CMAKE_CURRENT_LIST_DIR}/../third_party/esp-nn")
     set(ESP_NN_SRCS
         "${ESP_NN_DIR}/src/activation_functions/esp_nn_relu_ansi.c"

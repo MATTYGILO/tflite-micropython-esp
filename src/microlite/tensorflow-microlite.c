@@ -279,7 +279,7 @@ static mp_obj_t interpreter_make_new(const mp_obj_type_t *type, size_t n_args, s
     // Set the tensor arena
     self->tensor_arena = arena;
 
-    mp_printf(MP_PYTHON_PRINTER, "interpreter_make_new: model size = %d, tensor arena = %d\n", self->model_data->len, self->tensor_arena->len);
+    mp_printf(MP_PYTHON_PRINTER, "interpreter_make_new: model size = %u, tensor arena = %u\n", (uint)self->model_data->len, (uint)self->tensor_arena->len);
 
     // Initialize the interpreter
     int code = libtf_interpreter_init(self);
@@ -379,7 +379,7 @@ static void interpreter_print(const mp_print_t *print, mp_obj_t self_in, mp_prin
 
     // The output will be like this: interpreter(model size = 1234, tensor_arena size = 1234)
     mp_print_str(print, "interpreter(");
-    mp_printf(print, "model size = %d, tensor_arena size = %d\n", self->model_data->len, self->tensor_arena->len);
+    mp_printf(print, "model size = %u, tensor_arena size = %u\n", (uint)self->model_data->len, (uint)self->tensor_arena->len);
     mp_obj_print_helper(print, output_tensor, PRINT_STR);
     mp_print_str(print, ")");
 }
